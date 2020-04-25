@@ -8,7 +8,7 @@ exports.create = function(request, response)
          host : 'localhost'
         ,port : 3307
         ,user : 'root'
-        ,password : ''
+        ,password : '1234'
         ,database : 'bbz_db'
     });
     connection.connect();
@@ -19,12 +19,16 @@ exports.create = function(request, response)
         {
             console.log(rows);
             console.log(fields);
-
-            msg = 'rows:'+JSON.stringify(rows);
+            console.log(rows.length);
+            msg = JSON.stringify(rows);
             console.log(msg);
-            response.send(msg);
+            response.json(msg);
+        }
+        else
+        {
+            response.json({"mesage":"400 Bad Request"});
         }
     });
 
-    response.send(msg);
+    //response.send(msg);
 }
