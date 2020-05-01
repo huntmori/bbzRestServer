@@ -1,5 +1,6 @@
 var mysql = require('mysql');
-
+var Pool = require("../../util/connectionPool");
+var db = require("../../config/dbConfig");
 exports.create = function(request, response)
 {
     var msg = '';
@@ -32,3 +33,27 @@ exports.create = function(request, response)
 
     //response.send(msg);
 }
+
+exports.test = function(request, response)
+{
+    console.log("test");
+    var pool = mysql.createPool(db);
+
+    pool.query("SELECT now() ", function(error, rows, fields)
+    {
+        //pool.releaseConnection();
+        if(!error)
+        {
+            console.log(rows);
+            console.log(fields);
+            console.log(rows.length);
+            msg = JSON.stringify(rows);
+            console.log(msg);
+            response.json(msg);
+        }
+        else
+        {
+            response.json({"mesage":"400 Bad Request"});
+        }
+    });
+};
