@@ -8,13 +8,14 @@ exports.create = function(request, response)
     var params = request.params;
     console.log("params", params);
     console.log("query", request.query);
+    console.log("body", request.body);
 
     var connection = mysql.createConnection({
-         host : 'localhost'
-        ,port : 3307
-        ,user : 'root'
-        ,password : '1234'
-        ,database : 'bbz_db'
+         host : db.host
+        ,port : db.port
+        ,user : db.user
+        ,password : db.password
+        ,database : db.database
     });
     connection.connect();
     connection.query("SELECT now() ", function(error, rows, fields)
@@ -22,9 +23,9 @@ exports.create = function(request, response)
         connection.end();
         if(!error)
         {
-            console.log(rows);
-            console.log(fields);
-            console.log(rows.length);
+            //console.log(rows);
+            //console.log(fields);
+            console.log("rows.length",rows.length);
             msg = JSON.stringify(rows);
             console.log(msg);
             response.json(msg);
@@ -42,7 +43,7 @@ exports.test = function(request, response)
 {
     console.log("test");
     var pool = mysql.createPool(db);
-
+    
     pool.query("SELECT now() as date", function(error, rows, fields)
     {
         //pool.releaseConnection();
