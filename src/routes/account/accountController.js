@@ -10,33 +10,21 @@ exports.create = function(request, response)
     console.log("query", request.query);
     console.log("body", request.body);
 
-    var connection = mysql.createConnection({
-         host : db.host
-        ,port : db.port
-        ,user : db.user
-        ,password : db.password
-        ,database : db.database
-    });
-    connection.connect();
-    connection.query("SELECT now() ", function(error, rows, fields)
-    {
-        connection.end();
-        if(!error)
-        {
-            //console.log(rows);
-            //console.log(fields);
-            console.log("rows.length",rows.length);
-            msg = JSON.stringify(rows);
-            console.log(msg);
-            response.json(msg);
+    console.log("test");
+    var pool = mysql.createPool(db);
+    
+    var user = {
+        'account_name':request.body.id
+        ,'password':request.body.password
+    }
+    var query = pool.query("INSERT INTO tb_user SET ?", user, function(error, result){
+        if(error){
+            console.error(error);
+            throw error;
         }
-        else
-        {
-            response.json({"mesage":"400 Bad Request"});
-        }
+        console.log(query);
+        response.send(200, 'success');
     });
-
-    //response.send(msg);
 }
 
 exports.test = function(request, response)
