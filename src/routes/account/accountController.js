@@ -17,21 +17,37 @@ exports.create = function(request, response)
         'account_name':request.body.id
         ,'password':request.body.password
     }
-    var query = pool.query("INSERT INTO tb_user SET ?", user, function(error, result){
+    var query = pool.query("SELECT password(?) as pass", request.body.password, function(error, result){
         if(error){
             console.error(error);
-            throw error;
+            response.send(400, "error while sql");
         }
-        console.log(query);
-        response.send(200, 'success');
+        console.log(query.sql);
+        console.log(result);
+        password_encoded = result[0].pass;
+        user.password = password_encoded;
+        console.log(password_encoded);
+        console.log('user',user);
+        
+        var query2 = pool.query("INSERT INTO tb_user SET ?", user, function(error, result){
+            if(error){
+                console.error(error);
+                response.send(400, "error while sql");
+            }
+            console.log(query.sql);
+            //deprecated
+            //response.send(200, 'success'); 
+            response.status(201).send('success');
+        }); 
     });
+
 }
 
 exports.test = function(request, response)
 {
     console.log("test");
     var pool = mysql.createPool(db);
-    
+     
     pool.query("SELECT now() as date", function(error, rows, fields)
     {
         //pool.releaseConnection();
