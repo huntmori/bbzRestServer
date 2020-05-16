@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var Pool = require("../../util/connectionPool");
 var db = require("../../config/dbConfig");
+var status = require("../../config/HttpStatus");
 exports.create = function(request, response)
 {
     var msg = '';
@@ -32,12 +33,14 @@ exports.create = function(request, response)
         var query2 = pool.query("INSERT INTO tb_user SET ?", user, function(error, result){
             if(error){
                 console.error(error);
-                response.send(400, "error while sql");
+                response.status(status.BAD_REQUEST)
+                        .send("error while sql");
             }
             console.log(query.sql);
             //deprecated
             //response.send(200, 'success'); 
-            response.status(201).send('success');
+            response.status(status.CREATED)
+                    .send('success');
         }); 
     });
 
