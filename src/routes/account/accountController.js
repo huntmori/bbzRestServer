@@ -7,18 +7,15 @@ exports.create = function(request, response)
     var msg = '';
 
     var params = request.params;
-    console.log("params", params);
-    console.log("query", request.query);
-    console.log("body", request.body);
-
-    console.log("test");
     var pool = mysql.createPool(db);
     
     var user = {
         'account_name':request.body.id
         ,'password':request.body.password
     }
-    var query = pool.query("SELECT password(?) as pass", request.body.password, function(error, result){
+
+    var sql_password = "SELECT password(?)  AS  pass"
+    var query = pool.query(sql_password, request.body.password, function(error, result){
         if(error){
             console.error(error);
             response.send(400, "error while sql");
@@ -37,13 +34,29 @@ exports.create = function(request, response)
                         .send("error while sql");
             }
             console.log(query.sql);
-            //deprecated
-            //response.send(200, 'success'); 
+            
             response.status(status.CREATED)
                     .send('success');
         }); 
     });
+}
 
+exports.login = function(request, response)
+{
+    var user = request.body;
+    var pool = mysql.createPool(db);
+    var sql = ` SELECT  *
+                FROM    tb_user 
+                WHERE   id = ? 
+                AND     password = password(?); `;
+    var filter = [user.account_name, user.password];
+    sql = mysql.format(sql, filter);
+
+    pool.query(sql, null, function(error, rows, fields)
+    {
+        
+    });
+    
 }
 
 exports.test = function(request, response)
@@ -68,10 +81,12 @@ exports.test = function(request, response)
             msg = JSON.stringify(rows);
             console.log(msg);
             response.json(result);
+            pool.releaseConnection();
         }
         else
         {
             response.json({"mesage":"400 Bad Request"});
+            pool.releaseConnection();
         }
     });
 };
