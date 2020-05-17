@@ -54,7 +54,12 @@ exports.login = function(request, response)
 
     pool.query(sql, null, function(error, rows, fields)
     {
-        
+        if(error){
+
+        }
+        else{
+            
+        }
     });
     
 }
