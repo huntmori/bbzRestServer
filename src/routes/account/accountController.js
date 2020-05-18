@@ -55,11 +55,18 @@ exports.login = function(request, response)
     pool.query(sql, null, function(error, rows, fields)
     {
         if(error){
-
+            response.status(status.INTERNAL_SERVER_ERROR).send({"message":"error occured while do something...",
+                                                                "error":error});
         }
         else{
-            
-        }
+            if(rows.length == 0){
+                //there is no account or password mismatched
+
+            }
+            else{
+                //login success
+            }
+        }   
     });
     
 }
