@@ -52,29 +52,37 @@ exports.login = function(request, response)
     var filter = [user.account_name, user.password];
     sql = mysql.format(sql, filter);
     
+    var status_code;
+    var data;
     pool.query(sql, function(error, rows, fields)
     {
         if(error){
             console.log("INTERNAL_SERVER_ERROR", "params", user, "sql", sql);
-            response.status(status.INTERNAL_SERVER_ERROR).send({"message":"error occured while do something...",
-                                                                "error":error});
+            status_code = status.INTERNAL_SERVER_ERROR;
+            data = {    
+                        message:"error occured while do something...",
+                        error:error
+                    };
         }
         else{
             if(rows.length == 0){
                 //there is no account or password mismatched
                 console.log("NO_CONTENT", "params", user, "sql", sql);
-                response.status(status.NO_CONTENT).send({
+                status_code = status.NO_CONTENT;
+                data = {
                     message : "there is no account name or password mismatched."
-                });
+                };
             }
             else{
                 //login success
                 console.log("ACCEPTED", "params", user, "sql", sql);
-                response.status(status.ACCEPTED).send({
+                status_code = status.ACCEPTED;
+                data = {
                     message:"login success"
-                })
+                };
             }
-        }   
+        }
+        response.status(status_code).send(data);
     });
     
 }
