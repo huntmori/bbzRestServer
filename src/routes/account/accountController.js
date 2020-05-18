@@ -56,31 +56,32 @@ exports.login = function(request, response)
     var data;
     pool.query(sql, function(error, rows, fields)
     {
-        if(error){
-            console.log("INTERNAL_SERVER_ERROR", "params", user, "sql", sql);
-            status_code = status.INTERNAL_SERVER_ERROR;
+        if(error)
+        {
+            console.log("BAD_REQUEST", "params", user, "sql", sql);
+            status_code = status.BAD_REQUEST;
             data = {    
-                        message:"error occured while do something...",
-                        error:error
+                        message:"error occured while do something..."
+                        ,error:error
                     };
         }
-        else{
-            if(rows.length == 0){
-                //there is no account or password mismatched
-                console.log("NO_CONTENT", "params", user, "sql", sql);
-                status_code = status.NO_CONTENT;
-                data = {
-                    message : "there is no account name or password mismatched."
-                };
-            }
-            else{
-                //login success
-                console.log("ACCEPTED", "params", user, "sql", sql);
-                status_code = status.ACCEPTED;
-                data = {
-                    message:"login success"
-                };
-            }
+        else if(rows.length == 0)
+        {
+            //there is no account or password mismatched
+            console.log("NO_CONTENT", "params", user, "sql", sql);
+            status_code = status.NO_CONTENT;
+            data = {
+                message : "there is no account name or password mismatched."
+            };
+        }
+        else
+        {
+            //login success
+            console.log("ACCEPTED", "params", user, "sql", sql);
+            status_code = status.ACCEPTED;
+            data = {
+                message:"login success"
+            };
         }
         response.status(status_code).send(data);
     });
@@ -113,7 +114,7 @@ exports.test = function(request, response)
         }
         else
         {
-            response.json({"mesage":"400 Bad Request"});
+            response.status(status.BAD_REQUEST).send({"mesage":"400 Bad Request"});
             pool.releaseConnection();
         }
     });
