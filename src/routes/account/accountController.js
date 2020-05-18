@@ -1,7 +1,7 @@
-var mysql = require('mysql');
+const mysql = require('mysql');
 var Pool = require("../../util/connectionPool");
-var db = require("../../config/dbConfig");
-var status = require("../../config/HttpStatus");
+const db = require("../../config/dbConfig");
+const status = require("../../config/HttpStatus");
 exports.create = function(request, response)
 {
     var msg = '';
@@ -27,7 +27,9 @@ exports.create = function(request, response)
         console.log(password_encoded);
         console.log('user',user);
         
-        var query2 = pool.query("INSERT INTO tb_user SET ?", user, function(error, result){
+        var query2 = pool.query(`   INSERT
+                                    INTO    tb_user 
+                                    SET     ?;   `, user, function(error, result){
             if(error){
                 console.error(error);
                 response.status(status.BAD_REQUEST)
@@ -58,7 +60,9 @@ exports.login = function(request, response)
     {
         if(error)
         {
-            console.log("BAD_REQUEST", "params", user, "sql", sql);
+            console.log("BAD_REQUEST",status.BAD_REQUEST, "params", user);
+            console.log( "sql", sql);
+
             status_code = status.BAD_REQUEST;
             data = {    
                         message:"error occured while do something..."
@@ -68,7 +72,9 @@ exports.login = function(request, response)
         else if(rows.length == 0)
         {
             //there is no account or password mismatched
-            console.log("NO_CONTENT", "params", user, "sql", sql);
+            console.log("NO_CONTENT",status.NO_CONTENT, "params", user);
+            console.log("sql", sql);
+
             status_code = status.NO_CONTENT;
             data = {
                 message : "there is no account name or password mismatched."
@@ -77,8 +83,10 @@ exports.login = function(request, response)
         else
         {
             //login success
-            console.log("ACCEPTED", "params", user, "sql", sql);
-            status_code = status.ACCEPTED;
+            console.log("OK",status.OK, "params", user);
+            console.log("sql", sql);
+
+            status_code = status.OK;
             data = {
                 message:"login success"
             };
