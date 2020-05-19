@@ -45,7 +45,10 @@ exports.create = function(request, response)
 
 exports.login = function(request, response)
 {
-    var user = request.body;
+    //console.log(request);
+    console.log("request.query",request.query);
+    var user = request.query;
+    console.log("user",user);
     var pool = mysql.createPool(db);
     var sql = ` SELECT  *
                 FROM    tb_user 
