@@ -40,7 +40,9 @@ exports.create = function(request, response)
             response.status(status.CREATED)
                     .send('success');
         }); 
+        console.log(query2);
     });
+    console.log(query);
 }
 
 exports.login = function(request, response)
