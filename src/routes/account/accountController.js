@@ -10,12 +10,12 @@ exports.create = function(request, response)
     var pool = mysql.createPool(db);
     
     var user = {
-        'account_name':request.body.id
-        ,'password':request.body.password
+        'account_name':request.query.account_name
+        ,'password':request.query.password
     }
 
     var sql_password = "SELECT password(?)  AS  pass"
-    var query = pool.query(sql_password, request.body.password, function(error, result){
+    var query = pool.query(sql_password, request.query.password, function(error, result){
         if(error){
             console.error(error);
             response.send(400, "error while sql");
