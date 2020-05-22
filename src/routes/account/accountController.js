@@ -26,19 +26,22 @@ exports.create = function(request, response)
         user.password = password_encoded;
         console.log(password_encoded);
         console.log('user',user);
-        
-        var query2 = pool.query(`   INSERT
-                                    INTO    tb_user 
-                                    SET     ?;   `, user, function(error, result){
+        let insert_sql = `  INSERT
+                            INTO    tb_user 
+                            SET     ?   `;
+        var query2 = pool.query(insert_sql, user, function(error, result){
             if(error){
                 console.error(error);
                 response.status(status.BAD_REQUEST)
                         .send("error while sql");
             }
-            console.log(query.sql);
+            else{
+                console.log(query.sql);
             
-            response.status(status.CREATED)
-                    .send('success');
+                response.status(status.CREATED)
+                        .send('success');
+            }
+            
         }); 
         console.log(query2);
     });
