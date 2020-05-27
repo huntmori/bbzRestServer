@@ -70,7 +70,7 @@ exports.login = function(request, response)
         {
             console.log("BAD_REQUEST",status.BAD_REQUEST, "params", user);
             console.log( "sql", sql);
-
+			console.log("ERROR", error);
             status_code = status.BAD_REQUEST;
             data = {    
                         message:"error occured while do something..."
