@@ -2,6 +2,7 @@ const mysql = require('mysql');
 var Pool = require("../../util/connectionPool");
 const db = require("../../config/dbConfig");
 const status = require("../../config/HttpStatus");
+
 exports.create = function(request, response)
 {
     var msg = '';
@@ -134,4 +135,14 @@ exports.test = function(request, response)
             pool.releaseConnection();
         }
     });
+};
+
+
+exports.body_test = function(request, response)
+{
+    console.log("test");
+	console.log("request",request);
+    //var pool = mysql.createPool(db);
+     
+    //console.log(request.body);
 };
