@@ -11,11 +11,11 @@ exports.create = function(request, response)
     var pool = mysql.createPool(db);
     
     var user = {
-        'account_name':request.query.account_name
-        ,'password':request.query.password
-    }
+        'account_name':request.query.account_name,
+        'password':request.query.password
+    };
 
-    var sql_password = "SELECT password(?)  AS  pass"
+    var sql_password = "SELECT password(?)  AS  pass";
     var query = pool.query(sql_password, request.query.password, function(error, result){
         if(error){
             console.error(error);
@@ -47,7 +47,7 @@ exports.create = function(request, response)
         console.log(query2);
     });
     console.log(query);
-}
+};
 
 exports.login = function(request, response)
 {
@@ -74,8 +74,8 @@ exports.login = function(request, response)
 			console.log("ERROR", error);
             status_code = status.BAD_REQUEST;
             data = {    
-                        message:"error occured while do something..."
-                        ,error:error
+                        message:"error occured while do something...",
+                        error:error
                     };
         }
         else if(rows.length == 0)
@@ -103,7 +103,7 @@ exports.login = function(request, response)
         response.status(status_code).send(data);
     });
     
-}
+};
 
 exports.test = function(request, response)
 {
@@ -115,7 +115,7 @@ exports.test = function(request, response)
         //pool.releaseConnection();
         if(!error)
         {
-            let result = new Object();
+            let result = {};
             result.data = Array();
             for(let i=0; i< rows.length; i++){
                 console.log(i+":"+rows[i]);
@@ -143,17 +143,17 @@ exports.test = function(request, response)
 
 exports.body_test = function(request, response)
 {
-	// try{
-	// 	console.log("test");
-	// 	console.log("request",request);	
-	// }
-	// catch(ex){
-	// 	console.error(ex);
-	// }
+	try{
+		console.log("test");
+		console.log("request",request);	
+	}
+	catch(ex){
+		console.error(ex);
+	}
 	
-	// console.log("response", response);
+	console.log("response", response);
     
-	// //var pool = mysql.createPool(db);
+    //var pool = mysql.createPool(db);
      
-	// //console.log(request.body);
+    //console.log(request.body);
 };
