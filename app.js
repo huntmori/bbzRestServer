@@ -15,15 +15,15 @@ app.use(express.urlencoded({extended:true}));
 const   dbConfig = require('./src/config/dbConfig');
 const   accountRoute = require("./src/routes/account/accountIndex");
 
-
-app.use (accountRoute);
-app.use("/TemplateData", express.static(__dirname+"/TemplateData"));
-app.use("/Build", express.static(__dirname+"/Build"));
-
 app.use(function(request, response, next){
 	console.log("request", request);
 	next();
 });
+app.use (accountRoute);
+app.use("/TemplateData", express.static(__dirname+"/TemplateData"));
+app.use("/Build", express.static(__dirname+"/Build"));
+
+
 
 app.get("/", function(request, response){
     var data = fs.readFileSync(__dirname+"/index.html",'utf-8');

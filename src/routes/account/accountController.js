@@ -131,7 +131,10 @@ exports.test = function(request, response)
         }
         else
         {
-            response.status(status.BAD_REQUEST).send({"mesage":"400 Bad Request"});
+            response.status(status.BAD_REQUEST)
+					.send({
+						"mesage":"400 Bad Request"
+					});
             pool.releaseConnection();
         }
     });
@@ -140,9 +143,17 @@ exports.test = function(request, response)
 
 exports.body_test = function(request, response)
 {
-    console.log("test");
-	console.log("request",request);
-    //var pool = mysql.createPool(db);
+	// try{
+	// 	console.log("test");
+	// 	console.log("request",request);	
+	// }
+	// catch(ex){
+	// 	console.error(ex);
+	// }
+	
+	// console.log("response", response);
+    
+	// //var pool = mysql.createPool(db);
      
-    //console.log(request.body);
+	// //console.log(request.body);
 };
