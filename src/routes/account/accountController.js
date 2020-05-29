@@ -140,7 +140,7 @@ exports.test = function(request, response)
     });
 };
 
-
+// raw-json test
 exports.body_test = function(request, response)
 {
 	try{
