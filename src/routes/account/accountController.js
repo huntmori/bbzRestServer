@@ -42,7 +42,6 @@ exports.create = function(request, response)
                 response.status(status.CREATED)
                         .send('success');
             }
-            
         }); 
         console.log(query2);
     });
@@ -105,6 +104,8 @@ exports.login = function(request, response)
     
 };
 
+
+// sql execution test
 exports.test = function(request, response)
 {
     console.log("test");

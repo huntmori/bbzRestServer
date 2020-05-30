@@ -16,7 +16,7 @@ const   dbConfig = require('./src/config/dbConfig');
 const   accountRoute = require("./src/routes/account/accountIndex");
 
 app.use(function(request, response, next){
-	console.log("request", request);
+	//console.log(request.)
 	next();
 });
 app.use (accountRoute);
