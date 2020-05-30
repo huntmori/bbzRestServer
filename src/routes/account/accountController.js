@@ -146,13 +146,13 @@ exports.body_test = function(request, response)
 {
 	try{
 		console.log("test");
-		console.log("request",request);	
+		console.log("request",request.body);	
 	}
 	catch(ex){
 		console.error(ex);
 	}
 	
-	console.log("response", response);
+	//console.log("response", response);
     
     //var pool = mysql.createPool(db);
      
