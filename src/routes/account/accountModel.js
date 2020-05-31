@@ -7,7 +7,7 @@ module.exports = {
 	encode_password : function(password){
 		return new Promise((resolve, reject)=>{
 			const con = mysql.createConnection(db);
-			let sql = "	SELECT	password(?)	AS pass	";
+			let sql = " SELECT password(?) AS pass ";
 			
 			con.query(sql, password, (err, results, fields)=>{
 				if(err){
@@ -26,9 +26,10 @@ module.exports = {
 	createMember : function(parameter){
 		return new Promise((resolve, reject)=>{
 			const con = mysql.createConnection(db);
-			let sql = `	INSERT	INTO	tb_user
-						SET		?	`;
+			let sql = "	INSERT	INTO	tb_user	SET		?	";
+			console.log("paramter", parameter);
 			con.query(sql, parameter, (err, results, fields)=>{
+				
 				if(err){
 					console.error("\terror:",err);
 					reject(err);

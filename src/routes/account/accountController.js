@@ -6,35 +6,43 @@ const model = require("./accountModel");
 exports.create = function(request, response)
 {
     var msg = '';
-    var params = request.params;
-    
+    var params = request.body;
+    console.log("\tparams:",params);
     var user = {
-        'account_name':request.query.account_name,
-        'password':request.query.password
+        'account_name':request.body.account_name,
+        'password':request.body.password
     };
 
     var pass_query = model.encode_password(user.password)
         .then(function(resolvedData){
             console.log("resolvedData",resolvedData);
             user.password = resolvedData[0].pass;
-        }).catch(function(err){
 
-        });
-    var create_query = model.createMember(user)
-        .then(function(resolvedData){
-            response.status(status.CREATED)
-                    .send({
-                        "result":true,
-                        "result_msg":"account created"
-                    });
+            var create_query = model.createMember(user)
+            .then(function(resolvedData){
+                response.status(status.CREATED)
+                        .send({
+                            "result":true,
+                            "result_msg":"account created"
+                        });
+            }).catch(function(err){
+                response.status(status.BAD_REQUEST)
+                        .send({
+                            "result":false,
+                            "result_msg":"error while sql",
+                            "error":err
+                        });
+            });
+
         }).catch(function(err){
             response.status(status.BAD_REQUEST)
-                    .send({
-                        "result":false,
-                        "result_msg":"error while sql",
-                        "error":err
-                    });
+            .send({
+                "result":false,
+                "result_msg":"error while sql",
+                "error":err
+            });
         });
+   
     
     // var sql_password = "SELECT password(?)  AS  pass";  
     // var query = pool.query(sql_password, request.query.password, function(error, result){
