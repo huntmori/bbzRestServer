@@ -40,4 +40,24 @@ module.exports = {
 			});
 		});
 	},
+
+	accountLogin : function (user){
+		return new Promise((resolve, reject)=>{
+			const con = mysql.createConnection(db);
+			let sql = `	SELECT	*
+						FROM	tb_user
+						WHERE	account_name = ?
+						AND		password = password(?)	`;
+			con.query(sql, user, (error, results, fields)=>{
+				if(error){
+					console.error("\terror:",error);
+					reject(error);
+				}
+				else{
+					console.log("\tsql success:", results);
+					ressolve(results);
+				}
+			});						
+		});
+	}
 };
