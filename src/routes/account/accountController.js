@@ -6,9 +6,7 @@ const model = require("./accountModel");
 exports.create = function(request, response)
 {
     var msg = '';
-
     var params = request.params;
-    var pool = mysql.createPool(db);
     
     var user = {
         'account_name':request.query.account_name,
@@ -74,8 +72,8 @@ exports.create = function(request, response)
 exports.login = function(request, response)
 {
     //console.log(request);
-    console.log("request.query",request.query);
-    var user = request.query;
+    console.log("request.query",request.body);
+    var user = request.body;
     console.log("user",user);
     var pool = mysql.createPool(db);
     var sql = ` SELECT  *
