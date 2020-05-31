@@ -16,7 +16,11 @@ const   dbConfig = require('./src/config/dbConfig');
 const   accountRoute = require("./src/routes/account/accountIndex");
 
 app.use(function(request, response, next){
-	console.log(request.url, request.originalUrl);
+    const ip = request.headers['x-forwarded-for'] ||  request.connection.remoteAddress;
+    const timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+    
+    console.log("["+timestamp+"]"+ip, request.url);
+//	console.log(request.url, request.originalUrl);
 	next();
 });
 app.use (accountRoute);
