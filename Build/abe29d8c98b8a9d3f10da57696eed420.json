@@ -1,0 +1,15 @@
+{
+"companyName": "DefaultCompany",
+"productName": "beyondBatlewithZombies",
+"productVersion": "0.1",
+"dataUrl": "a5a2e82d77f88e79dcbe60505b89e8ef.unityweb",
+"wasmCodeUrl": "0e4ec0274a84b464e5c255cf492540d0.unityweb",
+"wasmFrameworkUrl": "4a51265adc5e2283b60aac4058cf83c9.unityweb",
+"graphicsAPI": ["WebGL 2.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.3.9f1"
+}
