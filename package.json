@@ -14,7 +14,7 @@
     "express": "^4.17.1",
     "generic-pool": "^3.7.1",
     "moment": "^2.26.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "mybatis-mapper": "^0.6.5",
     "mysql": "^2.18.1",
     "winston": "^3.2.1",
